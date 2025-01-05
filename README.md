@@ -1,6 +1,6 @@
 # Tic tac toe
 
-## Requirements
+## Project brief
 
 ### CLI
 
@@ -20,52 +20,4 @@
 
 ## Class Responsibility Collaborator (CRC) Cards
 
-### Gameboard
-
-#### Responsibilities
-
--   create the nine squares
--   hold the game state e.g. for each square is it blank, X or O
-
-#### Collaborators
-
--   DisplayController
--   Players
-
----
-
-### Players
-
-#### Responsibilities
-
--   create player
--   place X or O in square
-
-#### Collaborators
-
--   Gameboard
-
----
-
-### GameLogic
-
-#### Responsibilities
-
--   remember whose turn it is
--   start and finish the game
-
-#### Collaborators
-
--   Gameboard
-
----
-
-### DisplayController
-
-#### Responsibilities
-
--   display the game state in the DOM
-
-#### Collaborators
-
--   Gameboard
+See [here](CRC_diagram.png)
