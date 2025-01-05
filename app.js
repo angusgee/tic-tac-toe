@@ -1,34 +1,34 @@
-function player(playerName: string): object {
+function player(playerName) {
     return {
         playerName: playerName,
-        drawMove(row: number, col: number): number[] {
+        drawMove: function (row, col) {
             return [row, col];
         },
     };
 }
-
-const gameBoard = (function (): object {
+var gameBoard = (function () {
     return {
-        createBoard() {
+        createBoard: function () {
+            console.log([
+                [0, 0, 0],
+                [0, 0, 0],
+                [0, 0, 0],
+            ]);
             return [
                 [0, 0, 0],
                 [0, 0, 0],
                 [0, 0, 0],
             ];
         },
-        updateBoard() {
-            return [];
-        },
     };
 })();
-
 function gameLogic() {
     return {
         isPlayerATurn: true,
-        isMoveValid() {
+        isMoveValid: function () {
             return 0;
         },
-        isGameOver() {
+        isGameOver: function () {
             return 0;
         },
     };
