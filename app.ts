@@ -1,7 +1,12 @@
+type player = {
+    playerName: string;
+    drawMove: (row: number, col: number) => number[];
+};
+
 function player(playerName: string): object {
     return {
-        playerName: playerName,
-        drawMove(row: number, col: number): number[] {
+        playerName,
+        drawMove(row: number, col: number) {
             return [row, col];
         },
     };
@@ -22,9 +27,16 @@ const gameBoard = (function (): object {
     };
 })();
 
-function gameLogic() {
+const gameLogic = (function () {
+    const playerOne = player("PlayerOne");
+    const playerTwo = player("PlayerTwo");
+
+    let currentPlayer = playerOne;
+
     return {
-        isPlayerATurn: true,
+        getCurrentPlayer() {
+            return currentPlayer;
+        },
         isMoveValid() {
             return 0;
         },
@@ -32,4 +44,4 @@ function gameLogic() {
             return 0;
         },
     };
-}
+})();
