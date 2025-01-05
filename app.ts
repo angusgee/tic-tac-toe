@@ -1,9 +1,9 @@
-type player = {
+type Player = {
     playerName: string;
     drawMove: (row: number, col: number) => number[];
 };
 
-function player(playerName: string): object {
+function player(playerName: string): Player {
     return {
         playerName,
         drawMove(row: number, col: number) {
@@ -12,7 +12,13 @@ function player(playerName: string): object {
     };
 }
 
-const gameBoard = (function (): object {
+type GameBoard = {
+    createBoard: () => number[][];
+    getCurrentBoard: () => number[][];
+    updateBoard: () => number[][];
+};
+
+const gameBoard = (function (): GameBoard {
     return {
         createBoard() {
             return [
@@ -20,6 +26,9 @@ const gameBoard = (function (): object {
                 [0, 0, 0],
                 [0, 0, 0],
             ];
+        },
+        getCurrentBoard() {
+            return [];
         },
         updateBoard() {
             return [];
@@ -37,11 +46,15 @@ const gameLogic = (function () {
         getCurrentPlayer() {
             return currentPlayer;
         },
-        isMoveValid() {
-            return 0;
+        isMoveValid(row: number, col: number) {
+            let state = gameBoard.getCurrentBoard();
+            // check using the row and col values
+            // return false if 1 or 2
+            // else if 0 return true
+            return true;
         },
-        isGameOver() {
-            return 0;
+        isGameOver(board: number[][]) {
+            return false;
         },
     };
 })();
