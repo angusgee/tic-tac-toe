@@ -13,29 +13,27 @@ function player(playerName: string): Player {
 }
 
 type GameBoard = {
-    createBoard: () => number[][];
-    getCurrentBoard: () => number[][];
-    updateBoard: () => number[][];
+    getBoard: () => number[][];
+    updateBoard: (row: number, col: number, newValue: number) => number[][];
 };
 
 const gameBoard = (function (): GameBoard {
+    let boardState = [
+        [0, 0, 0],
+        [0, 0, 0],
+        [0, 0, 0],
+    ];
     return {
-        createBoard() {
-            return [
-                [0, 0, 0],
-                [0, 0, 0],
-                [0, 0, 0],
-            ];
+        getBoard() {
+            return boardState;
         },
-        getCurrentBoard() {
+        updateBoard() {
+            // to-do: return a new array with the updated values
             return [
                 [0, 2, 0],
                 [0, 1, 0],
                 [0, 1, 2],
             ];
-        },
-        updateBoard() {
-            return [];
         },
     };
 })();
@@ -50,10 +48,15 @@ const gameLogic = (function () {
         getCurrentPlayer() {
             return currentPlayer;
         },
-        isMoveValid(row: number, col: number) {
-            let state = gameBoard.getCurrentBoard();
+        isMoveValid(row: number, col: number): boolean {
+            let state = gameBoard.getBoard();
             if (state[row][col] === 1 || state[row][col] === 2) return false;
             if (state[row][col] === 0) return true;
+            else return false;
+        },
+        placeMove(row: number, col: number) {
+            const newValue = currentPlayer === playerOne ? 1 : 2;
+            gameBoard.updateBoard(row, col, newValue);
         },
         isGameOver(board: number[][]) {
             return false;
