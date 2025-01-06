@@ -28,7 +28,11 @@ const gameBoard = (function (): GameBoard {
             ];
         },
         getCurrentBoard() {
-            return [];
+            return [
+                [0, 2, 0],
+                [0, 1, 0],
+                [0, 1, 2],
+            ];
         },
         updateBoard() {
             return [];
@@ -48,10 +52,8 @@ const gameLogic = (function () {
         },
         isMoveValid(row: number, col: number) {
             let state = gameBoard.getCurrentBoard();
-            // check using the row and col values
-            // return false if 1 or 2
-            // else if 0 return true
-            return true;
+            if (state[row][col] === 1 || state[row][col] === 2) return false;
+            if (state[row][col] === 0) return true;
         },
         isGameOver(board: number[][]) {
             return false;

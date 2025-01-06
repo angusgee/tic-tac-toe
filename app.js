@@ -9,27 +9,41 @@ function player(playerName) {
 var gameBoard = (function () {
     return {
         createBoard: function () {
-            console.log([
-                [0, 0, 0],
-                [0, 0, 0],
-                [0, 0, 0],
-            ]);
             return [
                 [0, 0, 0],
                 [0, 0, 0],
                 [0, 0, 0],
             ];
         },
+        getCurrentBoard: function () {
+            return [
+                [0, 2, 0],
+                [0, 1, 0],
+                [0, 1, 2],
+            ];
+        },
+        updateBoard: function () {
+            return [];
+        },
     };
 })();
-function gameLogic() {
+var gameLogic = (function () {
+    var playerOne = player("PlayerOne");
+    var playerTwo = player("PlayerTwo");
+    var currentPlayer = playerOne;
     return {
-        isPlayerATurn: true,
-        isMoveValid: function () {
-            return 0;
+        getCurrentPlayer: function () {
+            return currentPlayer;
         },
-        isGameOver: function () {
-            return 0;
+        isMoveValid: function (row, col) {
+            var state = gameBoard.getCurrentBoard();
+            if (state[row][col] === 1 || state[row][col] === 2)
+                return false;
+            if (state[row][col] === 0)
+                return true;
+        },
+        isGameOver: function (board) {
+            return false;
         },
     };
-}
+})();
