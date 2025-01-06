@@ -27,13 +27,9 @@ const gameBoard = (function (): GameBoard {
         getBoard() {
             return boardState;
         },
-        updateBoard() {
-            // to-do: return a new array with the updated values
-            return [
-                [0, 2, 0],
-                [0, 1, 0],
-                [0, 1, 2],
-            ];
+        updateBoard(row, col, newValue) {
+            boardState[row][col] = newValue;
+            return boardState;
         },
     };
 })();

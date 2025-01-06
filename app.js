@@ -7,23 +7,18 @@ function player(playerName) {
     };
 }
 var gameBoard = (function () {
+    var boardState = [
+        [0, 0, 0],
+        [0, 0, 0],
+        [0, 0, 0],
+    ];
     return {
-        createBoard: function () {
-            return [
-                [0, 0, 0],
-                [0, 0, 0],
-                [0, 0, 0],
-            ];
+        getBoard: function () {
+            return boardState;
         },
-        getCurrentBoard: function () {
-            return [
-                [0, 2, 0],
-                [0, 1, 0],
-                [0, 1, 2],
-            ];
-        },
-        updateBoard: function () {
-            return [];
+        updateBoard: function (row, col, newValue) {
+            boardState[row][col] = newValue;
+            return boardState;
         },
     };
 })();
@@ -36,11 +31,17 @@ var gameLogic = (function () {
             return currentPlayer;
         },
         isMoveValid: function (row, col) {
-            var state = gameBoard.getCurrentBoard();
+            var state = gameBoard.getBoard();
             if (state[row][col] === 1 || state[row][col] === 2)
                 return false;
             if (state[row][col] === 0)
                 return true;
+            else
+                return false;
+        },
+        placeMove: function (row, col) {
+            var newValue = currentPlayer === playerOne ? 1 : 2;
+            gameBoard.updateBoard(row, col, newValue);
         },
         isGameOver: function (board) {
             return false;
