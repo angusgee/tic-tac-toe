@@ -13,6 +13,7 @@ var gameBoard = (function () {
         [0, 0, 0],
     ];
     return {
+        boardState: boardState,
         getBoard: function () {
             return boardState;
         },
@@ -44,7 +45,19 @@ var gameLogic = (function () {
             gameBoard.updateBoard(row, col, newValue);
         },
         isGameOver: function (board) {
-            return false;
+            var isPlayerOneWin = function (num) { return num === 1; };
+            var topRow = board[0];
+            console.log(topRow.every(isPlayerOneWin));
+            // check if second row is all 1s or 2s
+            // check if third row is all 1s or 2s
+            // check if first col is all 1s or 2s
+            // check if second col is all 1s or 2s
+            // check if third col is all 1s or 2s
+            // check top left to bottom right diagonal
+            // check top right to bottom left diagonal
+            // return 1 if player one wins
+            // return 2 if player two wins
+            // return 0 if game is not won
         },
     };
 })();
