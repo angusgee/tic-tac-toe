@@ -48,6 +48,7 @@ var gameLogic = (function () {
         placeMove: function (row, col) {
             var newValue = currentPlayer === playerOne ? 1 : 2;
             gameBoard.updateBoard(row, col, newValue);
+            gameLogic.toggleCurrentPlayer();
         },
         isGameOver: function (board) {
             var isPlayerOneWin = function (num) { return num === 1; };

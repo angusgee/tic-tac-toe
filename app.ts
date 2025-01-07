@@ -60,6 +60,7 @@ const gameLogic = (function () {
         placeMove(row: number, col: number) {
             const newValue = currentPlayer === playerOne ? 1 : 2;
             gameBoard.updateBoard(row, col, newValue);
+            gameLogic.toggleCurrentPlayer();
         },
         isGameOver(board: number[][]) {
             const isPlayerOneWin = (num: number) => num === 1;
