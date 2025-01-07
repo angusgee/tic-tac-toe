@@ -1,14 +1,10 @@
 type Player = {
     playerName: string;
-    drawMove: (row: number, col: number) => number[];
 };
 
 function player(playerName: string): Player {
     return {
         playerName,
-        drawMove(row: number, col: number) {
-            return [row, col];
-        },
     };
 }
 

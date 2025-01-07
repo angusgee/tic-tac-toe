@@ -1,9 +1,6 @@
 function player(playerName) {
     return {
         playerName: playerName,
-        drawMove: function (row, col) {
-            return [row, col];
-        },
     };
 }
 var gameBoard = (function () {
