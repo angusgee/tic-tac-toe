@@ -31,6 +31,11 @@ var gameLogic = (function () {
         getCurrentPlayer: function () {
             return currentPlayer;
         },
+        toggleCurrentPlayer: function () {
+            return currentPlayer === playerOne
+                ? (currentPlayer = playerTwo)
+                : (currentPlayer = playerOne);
+        },
         isMoveValid: function (row, col) {
             var state = gameBoard.getBoard();
             if (state[row][col] === 1 || state[row][col] === 2)

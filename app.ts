@@ -43,8 +43,13 @@ const gameLogic = (function () {
     let currentPlayer = playerOne;
 
     return {
-        getCurrentPlayer() {
+        getCurrentPlayer(): Player {
             return currentPlayer;
+        },
+        toggleCurrentPlayer(): Player {
+            return currentPlayer === playerOne
+                ? (currentPlayer = playerTwo)
+                : (currentPlayer = playerOne);
         },
         isMoveValid(row: number, col: number): boolean {
             let state = gameBoard.getBoard();
