@@ -225,7 +225,7 @@ const displayController = (function () {
                 <input type="text" id="player-one" placeholder="Player One (X)">
                 <input type="text" id="player-two" placeholder="Player Two (O)">
             </div>
-            <div>${messageText}</div>`;
+            <div class="win-message">${messageText}</div>`;
             messageElement.appendChild(
                 document.getElementById("reset-button") || createResetButton()
             );

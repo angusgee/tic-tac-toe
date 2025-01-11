@@ -194,7 +194,7 @@ var displayController = (function () {
             var messageText = winner === 3
                 ? "Game Over - It's a Draw!"
                 : "".concat(winnerName, " wins!");
-            messageElement.innerHTML = "<div class=\"player-inputs\">\n                <input type=\"text\" id=\"player-one\" placeholder=\"Player One (X)\">\n                <input type=\"text\" id=\"player-two\" placeholder=\"Player Two (O)\">\n            </div>\n            <div>".concat(messageText, "</div>");
+            messageElement.innerHTML = "<div class=\"player-inputs\">\n                <input type=\"text\" id=\"player-one\" placeholder=\"Player One (X)\">\n                <input type=\"text\" id=\"player-two\" placeholder=\"Player Two (O)\">\n            </div>\n            <div class=\"win-message\">".concat(messageText, "</div>");
             messageElement.appendChild(document.getElementById("reset-button") || createResetButton());
         }
     }
