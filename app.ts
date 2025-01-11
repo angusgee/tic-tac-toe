@@ -12,6 +12,7 @@ type GameBoard = {
     boardState: number[][];
     getBoard: () => number[][];
     updateBoard: (row: number, col: number, newValue: number) => number[][];
+    resetBoard: () => number[][];
 };
 
 const gameBoard = (function (): GameBoard {
@@ -27,6 +28,14 @@ const gameBoard = (function (): GameBoard {
         },
         updateBoard(row, col, newValue) {
             boardState[row][col] = newValue;
+            return boardState;
+        },
+        resetBoard() {
+            boardState = [
+                [0, 0, 0],
+                [0, 0, 0],
+                [0, 0, 0],
+            ];
             return boardState;
         },
     };
@@ -96,7 +105,14 @@ const gameLogic = (function () {
             if (rightCol.every(isPlayerTwoWin)) return 2;
 
             if (topLeftToBottomRight.every(isPlayerOneWin)) return 1;
+            if (topLeftToBottomRight.every(isPlayerTwoWin)) return 2;
+            if (topRightToBottomLeft.every(isPlayerOneWin)) return 1;
             if (topRightToBottomLeft.every(isPlayerTwoWin)) return 2;
+
+            const isDraw = board.every((row) =>
+                row.every((cell) => cell !== 0)
+            );
+            if (isDraw) return 3;
 
             return 0;
         },
@@ -109,6 +125,32 @@ const displayController = (function () {
         cards.forEach((card) => {
             card.addEventListener("click", handleCardClick);
         });
+
+        const resetButton = document.getElementById("reset-button");
+        if (resetButton) {
+            resetButton.addEventListener("click", resetGame);
+        }
+    }
+
+    function resetGame() {
+        gameBoard.resetBoard();
+        updateDisplay();
+
+        const messageElement = document.getElementById("message");
+        if (messageElement) {
+            messageElement.textContent = "";
+            messageElement.appendChild(
+                document.getElementById("reset-button") || createResetButton()
+            );
+        }
+    }
+
+    function createResetButton() {
+        const button = document.createElement("button");
+        button.id = "reset-button";
+        button.textContent = "Reset Game";
+        button.addEventListener("click", resetGame);
+        return button;
     }
 
     function handleCardClick(event: Event) {
@@ -119,6 +161,11 @@ const displayController = (function () {
         if (gameLogic.isMoveValid(row, col)) {
             gameLogic.placeMove(row, col);
             updateDisplay();
+
+            const gameStatus = gameLogic.isGameOver(gameBoard.getBoard());
+            if (gameStatus !== 0) {
+                displayGameOver(gameStatus);
+            }
         }
     }
 
@@ -139,6 +186,23 @@ const displayController = (function () {
                 element.textContent = "";
             }
         });
+    }
+
+    function displayGameOver(winner: number) {
+        const messageElement = document.getElementById("message");
+        if (messageElement) {
+            const messageText =
+                winner === 3
+                    ? "Game Over - It's a Draw!"
+                    : winner === 1
+                    ? "Player One (X) wins!"
+                    : "Player Two (O) wins!";
+
+            messageElement.innerHTML = `<div>${messageText}</div>`;
+            messageElement.appendChild(
+                document.getElementById("reset-button") || createResetButton()
+            );
+        }
     }
 
     return {

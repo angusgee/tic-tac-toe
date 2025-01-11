@@ -18,6 +18,14 @@ var gameBoard = (function () {
             boardState[row][col] = newValue;
             return boardState;
         },
+        resetBoard: function () {
+            boardState = [
+                [0, 0, 0],
+                [0, 0, 0],
+                [0, 0, 0],
+            ];
+            return boardState;
+        },
     };
 })();
 var gameLogic = (function () {
@@ -92,8 +100,17 @@ var gameLogic = (function () {
                 return 2;
             if (topLeftToBottomRight.every(isPlayerOneWin))
                 return 1;
+            if (topLeftToBottomRight.every(isPlayerTwoWin))
+                return 2;
+            if (topRightToBottomLeft.every(isPlayerOneWin))
+                return 1;
             if (topRightToBottomLeft.every(isPlayerTwoWin))
                 return 2;
+            var isDraw = board.every(function (row) {
+                return row.every(function (cell) { return cell !== 0; });
+            });
+            if (isDraw)
+                return 3;
             return 0;
         },
     };
@@ -104,6 +121,26 @@ var displayController = (function () {
         cards.forEach(function (card) {
             card.addEventListener("click", handleCardClick);
         });
+        var resetButton = document.getElementById("reset-button");
+        if (resetButton) {
+            resetButton.addEventListener("click", resetGame);
+        }
+    }
+    function resetGame() {
+        gameBoard.resetBoard();
+        updateDisplay();
+        var messageElement = document.getElementById("message");
+        if (messageElement) {
+            messageElement.textContent = "";
+            messageElement.appendChild(document.getElementById("reset-button") || createResetButton());
+        }
+    }
+    function createResetButton() {
+        var button = document.createElement("button");
+        button.id = "reset-button";
+        button.textContent = "Reset Game";
+        button.addEventListener("click", resetGame);
+        return button;
     }
     function handleCardClick(event) {
         var card = event.target;
@@ -112,12 +149,46 @@ var displayController = (function () {
         if (gameLogic.isMoveValid(row, col)) {
             gameLogic.placeMove(row, col);
             updateDisplay();
+            var gameStatus = gameLogic.isGameOver(gameBoard.getBoard());
+            if (gameStatus !== 0) {
+                displayGameOver(gameStatus);
+            }
         }
     }
     function updateDisplay() {
-        // Will implement in next step
+        var cards = document.querySelectorAll(".card");
+        var board = gameBoard.getBoard();
+        cards.forEach(function (card) {
+            var element = card;
+            var row = parseInt(element.dataset.row || "0");
+            var col = parseInt(element.dataset.col || "0");
+            if (board[row][col] === 1) {
+                element.textContent = "X";
+            }
+            else if (board[row][col] === 2) {
+                element.textContent = "O";
+            }
+            else {
+                element.textContent = "";
+            }
+        });
+    }
+    function displayGameOver(winner) {
+        var messageElement = document.getElementById("message");
+        if (messageElement) {
+            var messageText = winner === 3
+                ? "Game Over - It's a Draw!"
+                : winner === 1
+                    ? "Player One (X) wins!"
+                    : "Player Two (O) wins!";
+            messageElement.innerHTML = "<div>".concat(messageText, "</div>");
+            messageElement.appendChild(document.getElementById("reset-button") || createResetButton());
+        }
     }
     return {
         initBoard: initBoard,
     };
 })();
+document.addEventListener("DOMContentLoaded", function () {
+    displayController.initBoard();
+});
