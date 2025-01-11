@@ -29,8 +29,8 @@ var gameBoard = (function () {
     };
 })();
 var gameLogic = (function () {
-    var playerOne = player("PlayerOne");
-    var playerTwo = player("PlayerTwo");
+    var playerOne = player("Player One");
+    var playerTwo = player("Player Two");
     var currentPlayer = playerOne;
     return {
         getCurrentPlayer: function () {
@@ -40,6 +40,14 @@ var gameLogic = (function () {
             return currentPlayer === playerOne
                 ? (currentPlayer = playerTwo)
                 : (currentPlayer = playerOne);
+        },
+        updatePlayerNames: function () {
+            var p1Input = document.getElementById("player-one");
+            var p2Input = document.getElementById("player-two");
+            if (p1Input === null || p1Input === void 0 ? void 0 : p1Input.value)
+                playerOne.playerName = p1Input.value;
+            if (p2Input === null || p2Input === void 0 ? void 0 : p2Input.value)
+                playerTwo.playerName = p2Input.value;
         },
         isMoveValid: function (row, col) {
             var state = gameBoard.getBoard();
@@ -176,12 +184,17 @@ var displayController = (function () {
     function displayGameOver(winner) {
         var messageElement = document.getElementById("message");
         if (messageElement) {
+            gameLogic.updatePlayerNames();
+            var currentPlayer = gameLogic.getCurrentPlayer();
+            var p1Input = document.getElementById("player-one");
+            var p2Input = document.getElementById("player-two");
+            var winnerName = winner === 1
+                ? (p1Input === null || p1Input === void 0 ? void 0 : p1Input.value) || "Player One (X)"
+                : (p2Input === null || p2Input === void 0 ? void 0 : p2Input.value) || "Player Two (O)";
             var messageText = winner === 3
                 ? "Game Over - It's a Draw!"
-                : winner === 1
-                    ? "Player One (X) wins!"
-                    : "Player Two (O) wins!";
-            messageElement.innerHTML = "<div>".concat(messageText, "</div>");
+                : "".concat(winnerName, " wins!");
+            messageElement.innerHTML = "<div class=\"player-inputs\">\n                <input type=\"text\" id=\"player-one\" placeholder=\"Player One (X)\">\n                <input type=\"text\" id=\"player-two\" placeholder=\"Player Two (O)\">\n            </div>\n            <div>".concat(messageText, "</div>");
             messageElement.appendChild(document.getElementById("reset-button") || createResetButton());
         }
     }

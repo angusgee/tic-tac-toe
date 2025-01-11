@@ -42,8 +42,8 @@ const gameBoard = (function (): GameBoard {
 })();
 
 const gameLogic = (function () {
-    const playerOne = player("PlayerOne");
-    const playerTwo = player("PlayerTwo");
+    const playerOne = player("Player One");
+    const playerTwo = player("Player Two");
 
     let currentPlayer = playerOne;
 
@@ -55,6 +55,17 @@ const gameLogic = (function () {
             return currentPlayer === playerOne
                 ? (currentPlayer = playerTwo)
                 : (currentPlayer = playerOne);
+        },
+        updatePlayerNames() {
+            const p1Input = document.getElementById(
+                "player-one"
+            ) as HTMLInputElement;
+            const p2Input = document.getElementById(
+                "player-two"
+            ) as HTMLInputElement;
+
+            if (p1Input?.value) playerOne.playerName = p1Input.value;
+            if (p2Input?.value) playerTwo.playerName = p2Input.value;
         },
         isMoveValid(row: number, col: number): boolean {
             let state = gameBoard.getBoard();
@@ -191,14 +202,30 @@ const displayController = (function () {
     function displayGameOver(winner: number) {
         const messageElement = document.getElementById("message");
         if (messageElement) {
+            gameLogic.updatePlayerNames();
+            const currentPlayer = gameLogic.getCurrentPlayer();
+            const p1Input = document.getElementById(
+                "player-one"
+            ) as HTMLInputElement;
+            const p2Input = document.getElementById(
+                "player-two"
+            ) as HTMLInputElement;
+
+            const winnerName =
+                winner === 1
+                    ? p1Input?.value || "Player One (X)"
+                    : p2Input?.value || "Player Two (O)";
+
             const messageText =
                 winner === 3
                     ? "Game Over - It's a Draw!"
-                    : winner === 1
-                    ? "Player One (X) wins!"
-                    : "Player Two (O) wins!";
+                    : `${winnerName} wins!`;
 
-            messageElement.innerHTML = `<div>${messageText}</div>`;
+            messageElement.innerHTML = `<div class="player-inputs">
+                <input type="text" id="player-one" placeholder="Player One (X)">
+                <input type="text" id="player-two" placeholder="Player Two (O)">
+            </div>
+            <div>${messageText}</div>`;
             messageElement.appendChild(
                 document.getElementById("reset-button") || createResetButton()
             );

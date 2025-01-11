@@ -60,3 +60,22 @@ body {
 #reset-button:hover {
     background-color: #45a049;
 }
+
+.player-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.player-inputs input {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.player-inputs input:focus {
+    outline: none;
+    border-color: #4caf50;
+}
