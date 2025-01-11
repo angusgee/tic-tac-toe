@@ -103,4 +103,49 @@ const gameLogic = (function () {
     };
 })();
 
-const displayController = (function () {})();
+const displayController = (function () {
+    function initBoard() {
+        const cards = document.querySelectorAll(".card");
+        cards.forEach((card) => {
+            card.addEventListener("click", handleCardClick);
+        });
+    }
+
+    function handleCardClick(event: Event) {
+        const card = event.target as HTMLElement;
+        const row = parseInt(card.dataset.row || "0");
+        const col = parseInt(card.dataset.col || "0");
+
+        if (gameLogic.isMoveValid(row, col)) {
+            gameLogic.placeMove(row, col);
+            updateDisplay();
+        }
+    }
+
+    function updateDisplay() {
+        const cards = document.querySelectorAll(".card");
+        const board = gameBoard.getBoard();
+
+        cards.forEach((card) => {
+            const element = card as HTMLElement;
+            const row = parseInt(element.dataset.row || "0");
+            const col = parseInt(element.dataset.col || "0");
+
+            if (board[row][col] === 1) {
+                element.textContent = "X";
+            } else if (board[row][col] === 2) {
+                element.textContent = "O";
+            } else {
+                element.textContent = "";
+            }
+        });
+    }
+
+    return {
+        initBoard,
+    };
+})();
+
+document.addEventListener("DOMContentLoaded", () => {
+    displayController.initBoard();
+});

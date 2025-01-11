@@ -98,4 +98,26 @@ var gameLogic = (function () {
         },
     };
 })();
-var displayController = (function () { })();
+var displayController = (function () {
+    function initBoard() {
+        var cards = document.querySelectorAll(".card");
+        cards.forEach(function (card) {
+            card.addEventListener("click", handleCardClick);
+        });
+    }
+    function handleCardClick(event) {
+        var card = event.target;
+        var row = parseInt(card.dataset.row || "0");
+        var col = parseInt(card.dataset.col || "0");
+        if (gameLogic.isMoveValid(row, col)) {
+            gameLogic.placeMove(row, col);
+            updateDisplay();
+        }
+    }
+    function updateDisplay() {
+        // Will implement in next step
+    }
+    return {
+        initBoard: initBoard,
+    };
+})();
