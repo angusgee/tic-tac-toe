@@ -12,7 +12,15 @@ body {
 }
 
 .container {
-    background-color: aquamarine;
-    min-width: 500px;
-    min-height: 500px;
+    width: 600px;
+    height: 600px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.card {
+    background-color: aliceblue;
+    border: 1px solid black;
+    height: 200px;
+    width: 200px;
 }
