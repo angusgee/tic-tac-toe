@@ -139,7 +139,7 @@ var displayController = (function () {
         updateDisplay();
         var messageElement = document.getElementById("message");
         if (messageElement) {
-            messageElement.textContent = "";
+            messageElement.innerHTML = "<div class=\"player-inputs\">\n                <input type=\"text\" id=\"player-one\" placeholder=\"Player One (X)\">\n                <input type=\"text\" id=\"player-two\" placeholder=\"Player Two (O)\">\n            </div>";
             messageElement.appendChild(document.getElementById("reset-button") || createResetButton());
         }
     }

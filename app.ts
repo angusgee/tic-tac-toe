@@ -149,7 +149,10 @@ const displayController = (function () {
 
         const messageElement = document.getElementById("message");
         if (messageElement) {
-            messageElement.textContent = "";
+            messageElement.innerHTML = `<div class="player-inputs">
+                <input type="text" id="player-one" placeholder="Player One (X)">
+                <input type="text" id="player-two" placeholder="Player Two (O)">
+            </div>`;
             messageElement.appendChild(
                 document.getElementById("reset-button") || createResetButton()
             );
